@@ -1,0 +1,33 @@
+int baselineTemp = 0;
+int celsius = 0;
+
+const int sensorPin = A2;  
+const int ledPin = 12;     
+void setup() {
+  Serial.begin(9600);      
+  pinMode(ledPin, OUTPUT);  
+}
+
+void loop() {
+  
+  baselineTemp = 40;
+  
+  celsius = map(((analogRead(A2) - 20) * 3.04), 0, 1023, -40, 125);
+ 
+
+  Serial.print("Temperatura: ");
+  Serial.print(celsius);
+  Serial.println(" C");
+
+  
+  if (Serial.available() > 0) {
+    char command = Serial.read();
+    if (command == 'A') {
+      digitalWrite(ledPin, HIGH); 
+    } else if (command == 'S') {
+      digitalWrite(ledPin, LOW); 
+    }
+  }
+
+  delay(5000); 
+}
